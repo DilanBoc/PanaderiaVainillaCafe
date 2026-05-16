@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cinnamon: #7B3F00;
+  --vanilla: #FDF5E6;
+  --crust: #C08552;
+}
+
+body {
+  font-family: var(--font-plus-jakarta), sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-playfair), serif;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-gradient {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6));
+}
+
+.card-shadow {
+  box-shadow: 0 10px 40px -15px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-shadow:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px -12px rgba(123, 63, 0, 0.12);
+}
+
+.whatsapp-float {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
