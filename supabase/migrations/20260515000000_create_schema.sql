@@ -22,21 +22,19 @@ CREATE TABLE products (
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 
--- Create policies (Public read, Admin write)
--- Note: In a real Supabase environment, you would use auth.uid() or roles.
--- For now, we'll allow public read.
+-- Public catalog reads for the landing.
 CREATE POLICY "Public read categories" ON categories FOR SELECT USING (true);
 CREATE POLICY "Public read products" ON products FOR SELECT USING (true);
 
--- Admin policies (Authenticated users can do everything)
+-- V2 admin policies. Replace this with explicit roles before production.
 CREATE POLICY "Admin CRUD categories" ON categories FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin CRUD products" ON products FOR ALL TO authenticated USING (true);
 
 -- Initial seed data
-INSERT INTO categories (name, slug) VALUES 
+INSERT INTO categories (name, slug) VALUES
 ('Panadería', 'panaderia'),
-('Bebidas', 'bebidas'),
+('Bebidas frías', 'bebidas-frias'),
+('Bebidas calientes', 'bebidas-calientes'),
 ('Pasabocas', 'pasabocas');
 
--- Storage setup (this is usually done via Supabase dashboard or CLI config, 
--- but we can mention it in the instructions)
+-- Storage setup will be completed in V2 with a public images bucket.

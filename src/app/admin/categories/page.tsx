@@ -1,115 +1,119 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getCategories, createCategory, deleteCategory } from '@/lib/api';
-import { Category } from '@/types';
-import { Plus, Trash2, ArrowLeft, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { MOCK_CATEGORIES } from '@/lib/constants';
+import { ArrowLeft, Plus, RotateCcw, Trash2 } from 'lucide-react';
+import { Category } from '@/types';
+import {
+  createLocalId,
+  createSlug,
+  getLocalCategories,
+  getLocalProducts,
+  resetLocalCatalog,
+  saveLocalCategories,
+} from '@/lib/localCatalog';
 
 export default function CategoriesAdmin() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(() => getLocalCategories());
   const [newName, setNewName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    async function fetchCats() {
-      try {
-        // En producción: const data = await getCategories();
-        // Para pruebas locales:
-        setCategories(MOCK_CATEGORIES);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCats();
-  }, []);
-
-  const handleAdd = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newName.trim()) return;
-
-    setIsSubmitting(true);
-    try {
-      // En producción: const newCat = await createCategory(newName);
-      // Para simulación local:
-      const newCat: Category = {
-        id: Math.random().toString(),
-        name: newName,
-        slug: newName.toLowerCase().replace(/ /g, '-'),
-        created_at: new Date().toISOString()
-      };
-      setCategories([...categories, newCat]);
-      setNewName('');
-    } catch (e) {
-      alert('Error al crear categoría');
-    } finally {
-      setIsSubmitting(false);
-    }
+  const persistCategories = (nextCategories: Category[]) => {
+    setCategories(nextCategories);
+    saveLocalCategories(nextCategories);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('¿Seguro que quieres borrar esta categoría?')) return;
-    try {
-      // En producción: await deleteCategory(id);
-      setCategories(categories.filter(c => c.id !== id));
-    } catch (e) {
-      alert('Error al borrar');
+  const handleAdd = (event: React.FormEvent) => {
+    event.preventDefault();
+    const name = newName.trim();
+    if (!name) return;
+
+    const slug = createSlug(name);
+    if (categories.some((category) => category.slug === slug)) {
+      window.alert('Ya existe una categoría con ese nombre.');
+      return;
     }
+
+    const newCategory: Category = {
+      id: createLocalId('cat'),
+      name,
+      slug,
+      created_at: new Date().toISOString(),
+    };
+
+    persistCategories([...categories, newCategory]);
+    setNewName('');
   };
 
-  if (loading) return (
-    <div className="flex h-screen items-center justify-center">
-      <Loader2 className="w-8 h-8 animate-spin text-[#7B3F00]" />
-    </div>
-  );
+  const handleDelete = (id: string) => {
+    const productsUsingCategory = getLocalProducts().filter((product) => product.category_id === id);
+    if (productsUsingCategory.length > 0) {
+      window.alert('Primero cambia o elimina los productos de esta categoría.');
+      return;
+    }
+
+    if (!window.confirm('¿Seguro que quieres borrar esta categoría?')) return;
+    persistCategories(categories.filter((category) => category.id !== id));
+  };
+
+  const handleReset = () => {
+    if (!window.confirm('¿Restaurar categorías y productos demo?')) return;
+    resetLocalCatalog();
+    setCategories(getLocalCategories());
+  };
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <div className="flex items-center gap-4 mb-8">
-        <Link href="/" className="p-2 hover:bg-stone-100 rounded-full transition-colors">
-          <ArrowLeft className="w-6 h-6" />
-        </Link>
-        <h1 className="text-3xl font-serif font-bold italic">Gestionar Categorías</h1>
-      </div>
-
-      <form onSubmit={handleAdd} className="flex gap-4 mb-12 bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-        <input 
-          type="text" 
-          placeholder="Nombre de la nueva categoría..." 
-          className="flex-grow px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-200"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          disabled={isSubmitting}
-        />
-        <button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="bg-[#7B3F00] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#5D2F00] disabled:opacity-50 transition-all"
-        >
-          {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
-          Agregar
-        </button>
-      </form>
-
-      <div className="grid gap-4">
-        {categories.map((cat) => (
-          <div key={cat.id} className="bg-white p-6 rounded-2xl flex justify-between items-center border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
+    <div className="min-h-screen bg-[#FBFBF9]">
+      <div className="max-w-4xl mx-auto p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-4">
+            <Link href="/" className="p-2 hover:bg-stone-100 rounded-full transition-colors" aria-label="Volver al inicio">
+              <ArrowLeft className="w-6 h-6" />
+            </Link>
             <div>
-              <p className="font-bold text-lg">{cat.name}</p>
-              <p className="text-stone-400 text-xs font-mono">slug: {cat.slug}</p>
+              <p className="text-xs uppercase tracking-widest text-stone-400 font-bold">Demo local V1.1</p>
+              <h1 className="text-3xl font-serif font-bold italic">Gestionar Categorías</h1>
             </div>
-            <button 
-              onClick={() => handleDelete(cat.id)}
-              className="p-3 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
-            >
-              <Trash2 className="w-5 h-5" />
-            </button>
           </div>
-        ))}
+          <Link href="/admin/products" className="text-sm font-bold text-[#7B3F00] hover:underline">
+            Ir a productos
+          </Link>
+        </div>
+
+        <form onSubmit={handleAdd} className="grid sm:grid-cols-[1fr_auto] gap-4 mb-8 bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-stone-100">
+          <input
+            type="text"
+            placeholder="Nombre de la nueva categoría"
+            className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-200"
+            value={newName}
+            onChange={(event) => setNewName(event.target.value)}
+          />
+          <button type="submit" className="bg-[#7B3F00] text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#5D2F00] transition-all">
+            <Plus className="w-5 h-5" />
+            Agregar
+          </button>
+        </form>
+
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-sm text-stone-500">Los cambios se guardan en este navegador con localStorage.</p>
+          <button type="button" onClick={handleReset} className="inline-flex items-center gap-2 text-sm font-bold text-stone-500 hover:text-[#7B3F00]">
+            <RotateCcw className="w-4 h-4" />
+            Restaurar demo
+          </button>
+        </div>
+
+        <div className="grid gap-4">
+          {categories.map((category) => (
+            <div key={category.id} className="bg-white p-5 sm:p-6 rounded-2xl flex justify-between items-center border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
+              <div>
+                <p className="font-bold text-lg">{category.name}</p>
+                <p className="text-stone-400 text-xs font-mono">slug: {category.slug}</p>
+              </div>
+              <button type="button" onClick={() => handleDelete(category.id)} className="p-3 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" aria-label={`Borrar ${category.name}`}>
+                <Trash2 className="w-5 h-5" />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

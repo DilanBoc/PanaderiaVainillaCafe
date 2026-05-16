@@ -1,21 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --cinnamon: #7B3F00;
-  --vanilla: #FDF5E6;
-  --crust: #C08552;
+@theme {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  
+  --color-cinnamon: #7B3F00;
+  --color-vanilla: #FDF5E6;
+  --color-crust: #C08552;
 }
 
-body {
-  font-family: var(--font-plus-jakarta), sans-serif;
-}
-
-.font-serif {
-  font-family: var(--font-playfair), serif;
-}
-
+/* Custom Styles */
 .glass-nav {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
@@ -43,4 +37,13 @@ body {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+body {
+  @apply antialiased text-stone-900 bg-[#FBFBF9] overflow-x-hidden;
+  font-family: var(--font-plus-jakarta), sans-serif;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-playfair), serif;
 }

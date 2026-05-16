@@ -1,11 +1,12 @@
-# Helper para que Python lea las constantes de TypeScript de forma simple (Simulación de API)
+# Legacy helper kept for manual Python checks.
 MOCK_CATEGORIES = [
-    {'id': '1', 'name': 'Panadería', 'slug': 'panaderia'},
-    {'id': '2', 'name': 'Bebidas', 'slug': 'bebidas'},
-    {'id': '3', 'name': 'Pasabocas', 'slug': 'pasabocas'},
+    {'id': 'panaderia', 'name': 'Panaderia', 'slug': 'panaderia'},
+    {'id': 'bebidas-frias', 'name': 'Bebidas frias', 'slug': 'bebidas-frias'},
+    {'id': 'bebidas-calientes', 'name': 'Bebidas calientes', 'slug': 'bebidas-calientes'},
+    {'id': 'pasabocas', 'name': 'Pasabocas', 'slug': 'pasabocas'},
 ]
 
 MOCK_PRODUCTS = [
-    {'id': '1', 'name': 'Hogaza Masa Madre', 'price': 18000, 'category_id': '1'},
-    {'id': '2', 'name': 'Granizado de Café', 'price': 8900, 'category_id': '2'},
+    {'id': 'hogaza-masa-madre', 'name': 'Hogaza Masa Madre', 'price': 18000, 'category_id': 'panaderia'},
+    {'id': 'granizado-cafe', 'name': 'Granizado de Cafe', 'price': 8900, 'category_id': 'bebidas-frias'},
 ]

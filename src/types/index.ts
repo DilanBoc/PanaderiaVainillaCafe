@@ -5,6 +5,8 @@ export interface Category {
   created_at: string;
 }
 
+export type ProductTemperature = 'fria' | 'caliente' | null;
+
 export interface Product {
   id: string;
   name: string;
@@ -13,6 +15,7 @@ export interface Product {
   category_id: string | null;
   image_url: string | null;
   is_star: boolean;
+  temperature?: ProductTemperature;
   created_at: string;
   category?: Category;
 }

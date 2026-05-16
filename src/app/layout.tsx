@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Vainilla y Canela | Panadería & Café Artesanal",
-  description: "Descubre el sabor auténtico de Melgar. Panes de fermentación lenta, granizados únicos y el aroma dulce que te hace sentir en casa.",
+  description: "Panadería artesanal en Melgar con panes de fermentación lenta, bebidas frías, cafés y pedidos para reuniones.",
 };
 
 export default function RootLayout({
