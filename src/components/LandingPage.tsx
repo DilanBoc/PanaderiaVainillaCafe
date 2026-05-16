@@ -24,6 +24,8 @@ import { Category, Product } from '@/types';
 import { getLocalCategories, getLocalProducts } from '@/lib/localCatalog';
 
 const PHONE_NUMBER = '573202381555';
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2365.9634242500033!2d-74.6302461363233!3d4.208471556052663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3edfe53026d061%3A0xcf8577b584591b1a!2sPanaderia%20Vainilla%20%26%20Canela!5e0!3m2!1sen!2sco!4v1778911146347!5m2!1sen!2sco';
+const MAP_DIRECTIONS_URL = 'https://www.google.com/maps/dir/?api=1&destination=Panaderia%20Vainilla%20%26%20Canela%2C%20Melgar%2C%20Tolima&destination_place_id=ChIJYdAmM-XfPo4RGprFhXe1hQw';
 
 function whatsappHref(message: string) {
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -336,15 +338,27 @@ export default function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="bg-stone-800 rounded-[2.5rem] sm:rounded-[3rem] p-3 sm:p-4 shadow-2xl border border-stone-700 h-[350px] sm:h-[450px] overflow-hidden relative">
-                <div className="w-full h-full bg-stone-900 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col items-center justify-center text-center p-6 sm:p-10 group overflow-hidden">
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=1000')] opacity-20 group-hover:scale-110 transition-transform duration-1000 grayscale" />
-                  <div className="relative z-10">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#7B3F00] rounded-full flex items-center justify-center mb-6 mx-auto shadow-2xl shadow-orange-900/50">
-                      <Navigation className="text-white w-6 h-6 sm:w-8 sm:h-8" />
+              <div className="bg-stone-800 rounded-[2.5rem] sm:rounded-[3rem] p-3 sm:p-4 shadow-2xl border border-stone-700 overflow-hidden relative">
+                <div className="w-full bg-stone-900 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden">
+                  <iframe
+                    src={MAP_EMBED_URL}
+                    title="Mapa de Panadería Vainilla & Canela en Melgar"
+                    className="h-[330px] sm:h-[430px] w-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-stone-900 p-5 sm:p-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-11 h-11 bg-[#7B3F00] rounded-full flex items-center justify-center shadow-xl shadow-orange-900/30">
+                        <Navigation className="text-white w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-base sm:text-lg font-serif font-bold">Panadería Vainilla & Canela</p>
+                        <p className="text-xs sm:text-sm text-stone-400">Melgar, Tolima</p>
+                      </div>
                     </div>
-                    <p className="text-lg sm:text-xl font-serif font-bold mb-4">La Florida, Melgar</p>
-                    <a href="https://maps.google.com/?q=Calle+7B+%2311+-61,+Melgar,+Tolima" target="_blank" className="bg-white text-stone-950 px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-bold text-xs sm:text-sm hover:bg-orange-50 transition-all flex items-center gap-2 mx-auto w-fit">
+                    <a href={MAP_DIRECTIONS_URL} target="_blank" className="bg-white text-stone-950 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm hover:bg-orange-50 transition-all flex items-center justify-center gap-2">
                       Cómo Llegar
                       <ExternalLink className="w-4 h-4" />
                     </a>
