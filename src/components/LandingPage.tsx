@@ -194,8 +194,8 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <a href={whatsappHref('Hola, me interesa probar la hogaza de masa madre.')} target="_blank" className="inline-flex items-center justify-center gap-3 bg-[#7B3F00] text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold hover:shadow-2xl transition-all hover:scale-105 active:scale-95 w-full sm:w-auto">
-                Pedir una Hogaza
+              <a href={whatsappHref('Hola, me interesa pedir el Pan de Masa Madre.')} target="_blank" className="inline-flex items-center justify-center gap-3 bg-[#7B3F00] text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold hover:shadow-2xl transition-all hover:scale-105 active:scale-95 w-full sm:w-auto">
+                Pide el tuyo
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -288,10 +288,6 @@ export default function LandingPage() {
           <div className="lg:col-span-5">
             <div className="relative overflow-hidden rounded-[2rem] shadow-2xl aspect-[4/3] bg-stone-200">
               <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&q=80&w=1000" alt="Mesa preparada para reunión" className="w-full h-full object-cover" />
-              <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/70 to-transparent text-white">
-                <p className="font-serif text-2xl font-bold">Pedidos grupales</p>
-                <p className="text-sm text-white/80">Una línea clara para validar ventas B2B en V2.</p>
-              </div>
             </div>
           </div>
         </div>

@@ -9,6 +9,14 @@ Demo local V1.1 para validar la experiencia de una panadería artesanal antes de
 - Mantener los datos en `localStorage` para que la dueña vea el flujo sin depender de backend.
 - Dejar la estructura lista para cambiar la fuente local por Supabase en V2.
 
+## Handoff para LLMs y agentes
+
+Antes de continuar el proyecto en otra máquina o con otro modelo, leer:
+
+- `AGENTS.md`: reglas rápidas para agentes.
+- `docs/MADR.md`: contexto principal del proyecto, arquitectura, decisiones y plan V2.
+- `.agents/README.md`: espacio reservado para coordinación de agentes y futuras skills del proyecto.
+
 ## Rutas
 
 - `/`: landing pública.

@@ -15,8 +15,8 @@ export const MOCK_CATEGORIES: Category[] = [
 
 export const MOCK_PRODUCTS: Product[] = [
   {
-    id: 'hogaza-masa-madre',
-    name: 'Hogaza Masa Madre',
+    id: 'pan-masa-madre',
+    name: 'Pan de Masa Madre',
     description: 'Corteza rústica y miga tierna. Nuestra firma artesanal más buscada.',
     price: 18000,
     category_id: 'panaderia',

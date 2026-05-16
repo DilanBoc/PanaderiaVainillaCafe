@@ -7,7 +7,7 @@ const root = process.cwd();
 const constantsPath = join(root, 'src/lib/constants.ts');
 const constantsText = readFileSync(constantsPath, 'utf8');
 
-const badEncodingPattern = /\u00c3|\u00c2|\ufffd|\u00e2\u0153|\u00e2\u009d|\u00e2\u0161|\u00ef\u00b8/;
+const badEncodingPattern = /\u00c3|\u00c2|\ufffd|\u00e2/;
 const sourceExtensions = new Set(['.ts', '.tsx', '.md', '.mjs', '.sql']);
 
 function assert(condition, message) {
@@ -55,6 +55,8 @@ function validateCriticalFlows() {
   assert(landing.includes('getLocalProducts'), 'La landing debe leer productos locales.');
   assert(landing.includes('Atendemos empresas, reuniones y celebraciones'), 'Falta la sección empresarial.');
   assert(landing.includes('encodeURIComponent'), 'Los mensajes de WhatsApp deben codificarse.');
+  assert(!/h[o]gaza/i.test(landing), 'La UI usa un término de producto no aprobado.');
+  assert(!landing.includes(`Pedidos ${'grupales'}`) && !/B(?:2)B/i.test(landing), 'La sección empresarial muestra texto interno de roadmap.');
   assert(productsAdmin.includes('saveLocalProducts'), 'Admin productos debe persistir en localStorage.');
   assert(categoriesAdmin.includes('saveLocalCategories'), 'Admin categorías debe persistir en localStorage.');
   assert(adminHome.includes('Demo sin login'), 'El panel admin debe explicar que V1.1 no tiene login real.');
