@@ -56,7 +56,7 @@ function validateCriticalFlows() {
   assert(landing.includes('Atendemos empresas, reuniones y celebraciones'), 'Falta la sección empresarial.');
   assert(landing.includes('encodeURIComponent'), 'Los mensajes de WhatsApp deben codificarse.');
   assert(landing.includes('Panaderia%20Vainilla%20%26%20Canela'), 'El mapa debe usar el embed real de Google Maps.');
-  assert(landing.includes('destination_place_id=ChIJYdAmM-XfPo4RGprFhXe1hQw'), 'El botón Cómo Llegar debe apuntar al lugar correcto.');
+  assert(landing.includes('https://maps.app.goo.gl/m8eLAdFaRdg1t3e5A'), 'El botón Cómo Llegar debe apuntar al enlace corto correcto.');
   assert(!/h[o]gaza/i.test(landing), 'La UI usa un término de producto no aprobado.');
   assert(!landing.includes(`Pedidos ${'grupales'}`) && !/B(?:2)B/i.test(landing), 'La sección empresarial muestra texto interno de roadmap.');
   assert(productsAdmin.includes('saveLocalProducts'), 'Admin productos debe persistir en localStorage.');

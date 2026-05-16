@@ -25,7 +25,7 @@ import { getLocalCategories, getLocalProducts } from '@/lib/localCatalog';
 
 const PHONE_NUMBER = '573202381555';
 const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2365.9634242500033!2d-74.6302461363233!3d4.208471556052663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3edfe53026d061%3A0xcf8577b584591b1a!2sPanaderia%20Vainilla%20%26%20Canela!5e0!3m2!1sen!2sco!4v1778911146347!5m2!1sen!2sco';
-const MAP_DIRECTIONS_URL = 'https://www.google.com/maps/dir/?api=1&destination=Panaderia%20Vainilla%20%26%20Canela%2C%20Melgar%2C%20Tolima&destination_place_id=ChIJYdAmM-XfPo4RGprFhXe1hQw';
+const MAP_DIRECTIONS_URL = 'https://maps.app.goo.gl/m8eLAdFaRdg1t3e5A';
 
 function whatsappHref(message: string) {
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
